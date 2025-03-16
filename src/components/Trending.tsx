@@ -1,5 +1,5 @@
 const Trending: React.FC = ({ trendingMovies }: any) => {
-	console.log(trendingMovies);
+
 	return (
 		<div>
 			<h2>Trending Movies</h2>
@@ -20,3 +20,21 @@ const Trending: React.FC = ({ trendingMovies }: any) => {
 }
 
 export default Trending
+
+// import Trending from "./Trending";
+
+// interface TrendingMoviesProps {
+//   movies: object[];
+// }
+
+// const TrendingMovies: React.FC<TrendingMoviesProps> = ({ movies }) => {
+//   if (movies.length === 0) return null;
+
+//   return (
+//     <section className="trending">
+//       <Trending trendingMovies={movies} />
+//     </section>
+//   );
+// };
+
+// export default TrendingMovies;

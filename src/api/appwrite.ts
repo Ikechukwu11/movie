@@ -17,7 +17,7 @@ interface Movie {
 
 export const updateSearchCount = async (searchTerm: string, movie: Movie) => {
 	/*
-	** Use appwrit to check if search term already exists in the database
+	** Use appwrite to check if search term already exists in the database
 	*/
 	try {
 		const result = await database.listDocuments(DATABASE_ID, COLLECTION_ID, [
