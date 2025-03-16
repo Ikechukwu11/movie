@@ -10,13 +10,12 @@ const Details: React.FC = () => {
 	const [movie, setMovie] = useState<any>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [cast, setCast] = useState<any[]>([]);
-
-	console.log(id)
+	const movieId = id;
 
 	useEffect(() => {
-		const loadMovie = async () => {
+		const loadMovie = async (movieId: string) => {
 			setLoading(true);
-			const movieData = await fetchMovieDetails(id);
+			const movieData = await fetchMovieDetails(movieId);
 			setMovie(movieData);
 			setLoading(false);
 
@@ -27,8 +26,8 @@ const Details: React.FC = () => {
 			}
 		};
 
-		if (id) loadMovie();
-	}, [id]);
+		if (movieId) loadMovie(movieId);
+	}, [movieId]);
 
 	return (
 		<main>

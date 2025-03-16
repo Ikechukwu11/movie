@@ -1,4 +1,4 @@
-const Trending: React.FC = ({ trendingMovies }: any) => {
+const Trending: React.FC<{ trendingMovies: any[] }> = ({ trendingMovies }) => {
 
 	return (
 		<div>

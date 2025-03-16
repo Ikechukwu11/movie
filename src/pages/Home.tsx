@@ -3,7 +3,7 @@ import Search from "../components/Search"
 import Spinner from "../components/Spinner";
 import Card from "../components/Card";
 import useDebounce from "../hooks/useDebounce";
-import { getTrendingMovies, updateSearchCount } from "../api/appwrite";
+import { getTrendingMovies } from "../api/appwrite";
 import Trending from "../components/Trending";
 import { fetchMovies } from "../api/movie";
 
@@ -16,55 +16,14 @@ const Home: React.FC = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [trendingMovies, setTrendingMovies] = useState<object[]>([]);
+  const [trendingMovies, setTrendingMovies] = useState<any[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 
-  const API_BASE_URL = 'https://api.themoviedb.org/3';
-
-  const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
  
-  const API_OPTIONS = {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${API_KEY}`
-    },
-  }
   const debouncedSearchTerm = useDebounce(searchTerm, 1000); // Adjust the delay as needed
 
-  const loadMovies = async (query: string = '') => {
-    setLoading(true);
-    setErrorMessage('');
-    try {
-      const endpoint = query 
-        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}` : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
-      const response = await fetch(endpoint, API_OPTIONS);
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch movies');
-      }
-      const data = await response.json();
-
-      if (data.Response === 'False') {
-        setErrorMessage(data.Error || 'Failed to fetch movies');
-        setMovies([]);
-        return;
-      }
-
-      setMovies(data.results || []);
-
-      if (query && data.results.length > 0) {
-        await updateSearchCount(query, data.results[0]);
-      }
-
-    } catch (error) {
-      console.error(error);
-      setErrorMessage('Failed to fetch movies. Please try again later.');
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const loadTrendingMovies = async () => {
     try {
@@ -79,7 +38,7 @@ const Home: React.FC = () => {
 
   const observer = useRef<IntersectionObserver | null>(null);
   const lastMovieRef = useCallback(
-    (node: HTMLLIElement | null) => {
+    (node: HTMLLIElement | HTMLDivElement | null) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
 
@@ -100,11 +59,15 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const loadMovies = async () => {
-      setLoading(true);
-      const { movies: newMovies, totalPages } = await fetchMovies(debouncedSearchTerm, page);
-      setMovies((prev) => (page === 1 ? newMovies : [...prev, ...newMovies]));
-      setTotalPages(totalPages);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const { movies: newMovies, totalPages } = await fetchMovies(debouncedSearchTerm, page);
+        setMovies((prev) => (page === 1 ? newMovies : [...prev, ...newMovies]));
+        setTotalPages(totalPages);
+        setLoading(false);
+      } catch (error: any) {
+        setErrorMessage(error || 'Something went wrong');
+      }
     };
 
     loadMovies();
@@ -145,9 +108,9 @@ const Home: React.FC = () => {
             )
           }*/}
           <ul>
-            {movies.map((movie, index) => (
+            {movies.map((movie: any, index) => (
               <Card
-                key={movie.id}
+                key={index}
                 movie={movie}
                 ref={index === movies.length - 1 ? lastMovieRef : undefined} // Attach observer to last movie
               />

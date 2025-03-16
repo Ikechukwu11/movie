@@ -1,4 +1,4 @@
-import { API_BASE_IMAGE_URL, API_BASE_URL, API_OPTIONS } from ".";
+import { API_BASE_URL, API_OPTIONS } from ".";
 
 // export const fetchMovies = async (query: string = '') => {
 // 	setLoading(true);
@@ -67,7 +67,6 @@ export const fetchMovies = async (query: string = "", page: number = 1) => {
 
 export const fetchMovieDetails = async (movieId: string) => {
 
-	console.error(movieId, API_BASE_IMAGE_URL, API_BASE_URL, API_OPTIONS)
 	try {
 		const response = await fetch(`${API_BASE_URL}/movie/${movieId}?append_to_response=videos`, API_OPTIONS);
 		if (!response.ok) throw new Error("Failed to fetch movie details");

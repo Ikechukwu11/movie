@@ -21,7 +21,7 @@ const MovieDetail: React.FC<MovieDetailsProps> = ({ movie, loading }) => {
 	// 	setShowDropdown(!showDropdown); // Toggle dropdown visibility
 	// };
 
-	const handleProviderSelect = (provider) => {
+	const handleProviderSelect = (provider: any) => {
 		//setSelectedProvider(provider);
 		//const provider = randomProvider();
 		setIframeVideo({ video: ``, title: ``, type: 'youtube' });

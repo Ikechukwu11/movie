@@ -12,7 +12,7 @@ interface CardProps {
 }
 
 // const Card: React.FC<CardProps> = ({ movie: { id, title, vote_average, poster_path, release_date, original_language } }: any, ref) => {
-const Card = forwardRef<HTMLLIElement, CardProps>(({ movie }, ref) => {
+const Card = forwardRef<HTMLDivElement, CardProps>(({ movie }, ref) => {
 	return (
 		<div className="movie-card" ref={ref}>
 			<Link to={`/movie/${movie.id}`}>

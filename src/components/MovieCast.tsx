@@ -3,7 +3,7 @@ interface MovieCastProps {
 }
 
 const MovieCast: React.FC<MovieCastProps> = ({ cast }) => {
-  if (!cast || cast.length === 0) return <p>No cast information available.</p>;
+  if (!cast || cast.length === 0) return <p></p>;
 
   return (
     <div className="cast-list">
