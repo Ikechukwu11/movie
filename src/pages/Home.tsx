@@ -66,7 +66,7 @@ const Home: React.FC = () => {
         setTotalPages(totalPages);
         setLoading(false);
       } catch (error: any) {
-        setErrorMessage(error || 'Something went wrong');
+        setErrorMessage(error || 'Movie not found.');
       }
     };
 

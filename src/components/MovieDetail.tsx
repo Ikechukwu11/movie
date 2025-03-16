@@ -11,7 +11,7 @@ interface MovieDetailsProps {
 
 const MovieDetail: React.FC<MovieDetailsProps> = ({ movie, loading }) => {
 	if (loading) return <Spinner />;
-	if (!movie) return <p className="text-red-500">Movie not found.</p>;
+	if (!movie) return null //<p className="text-red-500">Movie not found.</p>;
 
 	const [iframeVideo, setIframeVideo] = useState<any>({ video: '', title: '', type: 'youtube' });
 
